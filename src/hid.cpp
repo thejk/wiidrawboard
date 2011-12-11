@@ -1,5 +1,6 @@
 #include "hid.hpp"
 
+#include <cstring>
 #include <sstream>
 #include <iostream>
 using namespace std;
