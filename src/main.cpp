@@ -6,8 +6,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
     HIDMgr mgr;
-    uint16_t vendor = 0x057E;
-    uint16_t product = 0x0306;
+    u16 vendor = 0x057E;
+    u16 product = 0x0306;
     const wchar_t* tmp_serial = L"E0-E7-51-97-74-09";
     wchar_t* serial = new wchar_t[wcslen(tmp_serial)+1];
     memcpy(serial, tmp_serial, (wcslen(tmp_serial)+1)*sizeof(wchar_t));

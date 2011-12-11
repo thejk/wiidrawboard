@@ -10,25 +10,26 @@
 class HIDMgr;
 class HIDDevice {
 public:
-    HIDDevice(hid_device* device, HIDMgr* mgr)
-    : mDevice(device), mMgr(mgr) { }
+    HIDDevice(hid_device* device, HIDMgr* mgr);
+    ~HIDDevice();
 
-    ~HIDDevice() {
-        if(mDevice != 0)
-            hid_close(mDevice);
-    }
+    void close();
 
     bool parseInfo(hid_device* dev = 0);
 
+    void send(unsigned char report, unsigned char* data);
+    void send(unsigned char* data);
 private:
     hid_device_info* getDevice(wchar_t* serial);
-    uint16_t parseWString(std::wstring str);
 
+    u16 mVendorID;
+    u16 mProductID;
     hid_device* mDevice;
     std::wstring mSerial;
-    uint16_t mProduct;
+    std::wstring mProduct;
     std::wstring mManufacturer;
     HIDMgr* mMgr;
+    char* mPath;
 };
 
 class HIDMgr
@@ -36,7 +37,7 @@ class HIDMgr
 public:
     HIDMgr();
     ~HIDMgr();
-    HIDDevice* open(uint16_t vendor, uint16_t product);
+    HIDDevice* open(u16 vendor, u16 product);
     void updateDevicesList();
     hid_device_info* getDevices() { return mDevices; }
 
