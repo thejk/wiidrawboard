@@ -10,10 +10,15 @@ INCLUDEPATH += ../inc
 CONFIG += qt
 
 # Input
-HEADERS += ../inc/hidapi.h ../inc/types.hpp ../inc/hid.hpp
+HEADERS += ../inc/hidapi.h ../inc/types.hpp
 
 SOURCES += ../src/main.cpp
+
+HEADERS +=  ../inc/hid.hpp
 SOURCES += ../src/hid.cpp
+
+HEADERS += ../inc/drawboard.hpp
+SOURCES += ../src/drawboard.cpp
 
 macx {
   SOURCES += ../platform/hid_osx.c

@@ -2,3 +2,4 @@
 wiidraw
 *.pro.user
 *~
+.DS_Store

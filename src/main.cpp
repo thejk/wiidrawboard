@@ -1,10 +1,13 @@
 #include "hid.hpp"
+#include "drawboard.hpp"
 
 #include <iostream>
+#include <QApplication>
 
 using namespace std;
 
 int main(int argc, char** argv) {
+    QApplication app(argc, argv);
     HIDMgr mgr;
     u16 vendor = 0x057E;
     u16 product = 0x0306;
@@ -36,4 +39,8 @@ int main(int argc, char** argv) {
     }
     cout <<count <<" devices" <<endl;
     hid_free_enumeration(devs)*/
+
+    Drawboard* board = new Drawboard();
+    board->show();
+    return app.exec();
 }
