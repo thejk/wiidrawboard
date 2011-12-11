@@ -19,14 +19,18 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent* event);
+    void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 
 private:
     QPoint scalePoint(QPoint pos) const;
     QRect scaleRect(QRect rect) const;
+    void draw(QPoint p1, QPoint p2);
 
     QPixmap buffer;
     QPainter painter;
+    QPoint lastDraw;
 };
 
 #endif /* DRAWBOARD_HPP */
