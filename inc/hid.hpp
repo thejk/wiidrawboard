@@ -17,8 +17,8 @@ public:
 
     bool parseInfo(hid_device* dev = 0);
 
-    void send(unsigned char report, unsigned char* data);
-    void send(unsigned char* data);
+    void send(unsigned char report, unsigned char* data, u16 size);
+    void send(unsigned char* data, u16 size);
 private:
     hid_device_info* getDevice(wchar_t* serial);
 

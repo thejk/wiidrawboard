@@ -54,6 +54,16 @@ hid_device_info* HIDDevice::getDevice(wchar_t* serial) {
     return 0;
 }
 
+void HIDDevice::send(unsigned char *data, u16 size) {
+    hid_send_feature_report(mDevice, data, size);
+}
+
+void HIDDevice::send(unsigned char report, unsigned char *data, u16 size) {
+    u8* buff = new u8[size+1];
+    buff[0] = report;
+    memcpy(&buff[1], data, size);
+    send(buff, size+1);
+}
 
 ////
 // HIDMgr
