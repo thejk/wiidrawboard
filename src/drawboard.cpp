@@ -5,6 +5,7 @@
 Drawboard::Drawboard(QWidget* parent)
     : QWidget(parent), buffer(sizeHint()), painter(&buffer)
 {
+    setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_OpaquePaintEvent);
 
     painter.setBackgroundMode(Qt::OpaqueMode);
@@ -111,3 +112,12 @@ void Drawboard::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
+void Drawboard::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape)
+    {
+        close();
+        return;
+    }
+    QWidget::keyPressEvent(event);
+}
