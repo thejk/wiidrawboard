@@ -20,6 +20,12 @@ SOURCES += ../src/hid.cpp
 HEADERS += ../inc/drawboard.hpp
 SOURCES += ../src/drawboard.cpp
 
+# Actually linux for now
+unix {
+  SOURCES += ../platform/hid_linux.c
+  LIBS += -ludev
+}
+
 macx {
   SOURCES += ../platform/hid_osx.c
   LIBS += -framework IOKit -framework CoreFoundation
