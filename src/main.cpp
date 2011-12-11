@@ -6,9 +6,19 @@
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int test_gui(int argc, char** argv) {
     QApplication app(argc, argv);
+
+    Drawboard* board = new Drawboard();
+    board->show();
+    return app.exec();
+}
+
+void test_bluetooth(int argc, char** argv) {
     HIDMgr mgr;
+    mgr.updateDevicesList();
+    mgr.printDevices();
+
     u16 vendor = 0x057E;
     u16 product = 0x0306;
     const wchar_t* tmp_serial = L"E0-E7-51-97-74-09";
@@ -26,21 +36,16 @@ int main(int argc, char** argv) {
 
     HIDDevice* device = mgr.open(vendor, product);
     cout <<(device!=NULL?"success":"failure") <<endl;
+}
 
-    /*
-    hid_device_info* devs = hid_enumerate(0, 0);
-    int count = 0;
-    while(devs != 0) {
-            wcout <<"manufacturer: " <<devs->manufacturer_string <<endl;
-            cout <<"vendor: " <<hex <<devs->vendor_id <<endl;
-            cout <<"product: " <<hex <<devs->product_id <<endl;
-            devs = devs->next;
-            count++;
+int main(int argc, char** argv) {
+    bool gui = false;
+    bool bluetooth = true;
+    if(gui) {
+        return test_gui(argc, argv);
     }
-    cout <<count <<" devices" <<endl;
-    hid_free_enumeration(devs)*/
-
-    Drawboard* board = new Drawboard();
-    board->show();
-    return app.exec();
+    else if(bluetooth) {
+        test_bluetooth(argc, argv);
+        return 0;
+    }
 }

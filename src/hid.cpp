@@ -1,7 +1,7 @@
 #include "hid.hpp"
 
 #include <sstream>
-
+#include <iostream>
 using namespace std;
 
 ////
@@ -77,4 +77,18 @@ HIDDevice* HIDMgr::open(u16 vendor, u16 product) {
 
 void HIDMgr::updateDevicesList() {
     mDevices = hid_enumerate(0, 0);
+}
+
+void HIDMgr::printDevices() {
+    hid_device_info* devs = hid_enumerate(0, 0);
+    int count = 0;
+    while(devs != 0) {
+            wcout <<"manufacturer: " <<devs->manufacturer_string <<endl;
+            cout <<"vendor: " <<hex <<devs->vendor_id <<endl;
+            cout <<"product: " <<hex <<devs->product_id <<endl;
+            devs = devs->next;
+            count++;
+    }
+    cout <<count <<" devices" <<endl;
+    hid_free_enumeration(devs);
 }

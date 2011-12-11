@@ -37,10 +37,13 @@ class HIDMgr
 public:
     HIDMgr();
     ~HIDMgr();
+
     HIDDevice* open(u16 vendor, u16 product);
+
     void updateDevicesList();
     hid_device_info* getDevices() { return mDevices; }
 
+    void printDevices();
 private:
     hid_device_info* mDevices;
 };
