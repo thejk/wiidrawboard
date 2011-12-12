@@ -20,8 +20,7 @@ SOURCES += ../src/hid.cpp
 HEADERS += ../inc/drawboard.hpp
 SOURCES += ../src/drawboard.cpp
 
-# Actually linux for now
-unix:!macx {
+linux-* {
   SOURCES += ../platform/hid_linux.c
   LIBS += -ludev
 }
