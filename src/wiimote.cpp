@@ -1,6 +1,8 @@
 #include "wiimote.hpp"
 
 #include <iostream>
+#include <cstring>
+#include <cstdio>
 using namespace std;
 
 void printblock(u8* data, u32 len) {
