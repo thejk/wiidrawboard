@@ -1,5 +1,6 @@
 #include "hid.hpp"
 #include "drawboard.hpp"
+#include "wiimote.hpp"
 
 #include <iostream>
 #include <QApplication>
@@ -35,7 +36,35 @@ void test_bluetooth(int argc, char** argv) {
     pin[0] = 0xe0;
 
     HIDDevice* device = mgr.open(vendor, product);
-    cout <<(device!=NULL?"success":"failure") <<endl;
+    if(device == NULL) {
+        cout <<"Failed to connect"<<endl;
+        return;
+    }
+
+    WiiMote mote(device);
+    /*
+    int val = 1;
+    //christmas light!
+    while(true) {
+        val = (val + 1) %5;
+        mote.setLEDs(val == 1, val == 2, val == 3, val == 4);
+        usleep(50000);
+    }*/
+
+    mote.cameraOn();
+    cout <<endl;
+    while(true) {
+        u32 size = 0;
+        u8* data = device->recv(size);
+        if(size > 0) {
+            cout <<"\e[A";
+            cout.flush();
+            //printblock(data, size);
+            mote.parseCamera(data, size);
+        }
+    }
+    //printButtons(device);
+
 }
 
 int main(int argc, char** argv) {
