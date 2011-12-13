@@ -5,40 +5,35 @@
 #include <QPixmap>
 #include <QWidget>
 
+#include "tool.hpp"
+
 class Drawboard : public QWidget
 {
     Q_OBJECT
 
 public:
-    enum Tool
-    {
-        PEN,
-        ERASER,
-    };
-
-    Drawboard(QWidget* parent = NULL, Tool initialTool = PEN);
+    Drawboard(QWidget* parent = NULL, tool::Tool initialTool = tool::PEN);
     ~Drawboard();
 
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
 
-    Tool tool() const
+    tool::Tool tool() const
     {
         return currentTool;
     }
 
 public slots:
-    void setTool(Tool tool);
+    void setTool(tool::Tool tool);
 
 signals:
-    void changedTool(Tool newTool);
+    void changedTool(tool::Tool newTool);
 
 protected:
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
-    void keyPressEvent(QKeyEvent* event);
     void resizeEvent(QResizeEvent* event);
 
 private:
@@ -54,7 +49,7 @@ private:
     QPixmap* buffer;
     QPainter* painter;
     QPoint lastDraw;
-    Tool currentTool;
+    tool::Tool currentTool;
     QPoint lastToolPos;
     bool toolVisible;
 };

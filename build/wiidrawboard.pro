@@ -21,6 +21,8 @@ SOURCES += ../src/hid.cpp
 
 HEADERS += ../inc/drawboard.hpp
 SOURCES += ../src/drawboard.cpp
+HEADERS += ../inc/toolbox.hpp
+SOURCES += ../src/toolbox.cpp
 
 linux-* {
   SOURCES += ../platform/hid_linux.c

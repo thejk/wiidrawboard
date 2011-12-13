@@ -1,17 +1,34 @@
 #include "hid.hpp"
 #include "drawboard.hpp"
+#include "toolbox.hpp"
 #include "wiimote.hpp"
 
 #include <iostream>
 #include <QApplication>
+#include <QHBoxLayout>
 
 using namespace std;
 
 int test_gui(int argc, char** argv) {
     QApplication app(argc, argv);
-
+    QWidget* window = new QWidget();
+    QHBoxLayout* layout = new QHBoxLayout();
     Drawboard* board = new Drawboard();
-    board->show();
+    Toolbox* toolbox = new Toolbox();
+    layout->setSpacing(0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(toolbox);
+    layout->addWidget(board, 1);
+    window->setLayout(layout);
+
+    QObject::connect(toolbox, SIGNAL(changedTool(tool::Tool)),
+                     board, SLOT(setTool(tool::Tool)));
+    QObject::connect(board, SIGNAL(changedTool(tool::Tool)),
+                     toolbox, SLOT(setTool(tool::Tool)));
+    QObject::connect(toolbox, SIGNAL(closed()), window, SLOT(close()));
+
+    window->show();
+
     return app.exec();
 }
 

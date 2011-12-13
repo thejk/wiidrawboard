@@ -1,16 +1,14 @@
 #include "drawboard.hpp"
 
 #include <QtGui>
-#include <iostream>
 
 static const int ERASER_RAD = 5;
 static const float ERASER_RAD_2 = ERASER_RAD * ERASER_RAD;
 
-Drawboard::Drawboard(QWidget* parent, Tool initialTool)
+Drawboard::Drawboard(QWidget* parent, tool::Tool initialTool)
     : QWidget(parent), buffer(NULL), painter(NULL),
       currentTool(initialTool), toolVisible(false)
 {
-    setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_OpaquePaintEvent);
 
     setupBuffer();
@@ -78,14 +76,14 @@ void Drawboard::draw(QPoint p1, QPoint p2)
 {
     switch (currentTool)
     {
-    case PEN:
+    case tool::PEN:
         painter->drawLine(p1, p2);
         update(std::min(p1.x(), p2.x()) - 1,
                std::min(p1.y(), p2.y()) - 1,
                std::max(p1.x(), p2.x()) + 1,
                std::max(p1.y(), p2.y()) + 1);
         break;
-    case ERASER:
+    case tool::ERASER:
         painter->save();
         painter->setPen(Qt::NoPen);
         painter->setBrush(painter->background());
@@ -157,27 +155,7 @@ void Drawboard::mouseReleaseEvent(QMouseEvent* event)
     showTool(false);
 }
 
-void Drawboard::keyPressEvent(QKeyEvent* event)
-{
-    if (event->key() == Qt::Key_Escape)
-    {
-        close();
-        return;
-    }
-    if (event->key() == Qt::Key_E)
-    {
-        setTool(ERASER);
-        return;
-    }
-    if (event->key() == Qt::Key_P)
-    {
-        setTool(PEN);
-        return;
-    }
-    QWidget::keyPressEvent(event);
-}
-
-void Drawboard::setTool(Tool tool)
+void Drawboard::setTool(tool::Tool tool)
 {
     if (tool == currentTool)
     {
@@ -216,9 +194,9 @@ void Drawboard::updateTool()
 
     switch (currentTool)
     {
-    case PEN:
+    case tool::PEN:
         break;
-    case ERASER:
+    case tool::ERASER:
         update(lastToolPos.x() - ERASER_RAD, lastToolPos.y() - ERASER_RAD,
                lastToolPos.x() + ERASER_RAD, lastToolPos.y() + ERASER_RAD);
         break;
@@ -244,9 +222,9 @@ void Drawboard::drawTool(QPainter* painter)
 
     switch (currentTool)
     {
-    case PEN:
+    case tool::PEN:
         break;
-    case ERASER:
+    case tool::ERASER:
         painter->save();
         painter->setBrush(Qt::NoBrush);
         painter->setPen(Qt::black);
