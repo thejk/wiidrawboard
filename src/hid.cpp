@@ -54,15 +54,26 @@ hid_device_info* HIDDevice::getDevice(wchar_t* serial) {
     return 0;
 }
 
-void HIDDevice::send(unsigned char *data, u16 size) {
-    hid_send_feature_report(mDevice, data, size);
+s32 HIDDevice::send(unsigned char *data, u16 size) {
+    return hid_write(mDevice, data, size);
 }
 
-void HIDDevice::send(unsigned char report, unsigned char *data, u16 size) {
+s32 HIDDevice::send(unsigned char report, unsigned char *data, u16 size) {
     u8* buff = new u8[size+1];
     buff[0] = report;
     memcpy(&buff[1], data, size);
-    send(buff, size+1);
+    return send(buff, size+1);
+}
+
+u8* HIDDevice::recv(u32 &size) {
+    u8* buff = new u8[128];
+    size = hid_read(mDevice, buff, 128);
+    return buff;
+}
+
+void HIDDevice::printLastError() {
+    const wchar_t* error = hid_error(mDevice);
+    wcout <<"Error " <<error <<"." <<endl;
 }
 
 ////
