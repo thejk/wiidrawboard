@@ -17,6 +17,7 @@ public:
     };
 
     Drawboard(QWidget* parent = NULL, Tool initialTool = PEN);
+    ~Drawboard();
 
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
@@ -38,11 +39,9 @@ protected:
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
-    QPoint scalePoint(QPoint pos) const;
-    QPoint invscalePoint(QPoint pos) const;
-    QRect scaleRect(QRect rect) const;
     void draw(QPoint p1, QPoint p2);
 
     void showTool(bool show);
@@ -50,8 +49,10 @@ private:
     void updateTool();
     void updateTool(const QPoint& pos);
 
-    QPixmap buffer;
-    QPainter painter;
+    void setupBuffer();
+
+    QPixmap* buffer;
+    QPainter* painter;
     QPoint lastDraw;
     Tool currentTool;
     QPoint lastToolPos;
