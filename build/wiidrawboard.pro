@@ -10,9 +10,11 @@ INCLUDEPATH += ../inc
 CONFIG += qt
 
 # Input
-HEADERS += ../inc/hidapi.h ../inc/types.hpp
+HEADERS += ../inc/hidapi.h ../inc/types.hpp \
+    ../inc/wiimote.hpp
 
-SOURCES += ../src/main.cpp
+SOURCES += ../src/main.cpp \
+    ../src/wiimote.cpp
 
 HEADERS +=  ../inc/hid.hpp
 SOURCES += ../src/hid.cpp
@@ -29,3 +31,7 @@ macx {
   SOURCES += ../platform/hid_osx.c
   LIBS += -framework IOKit -framework CoreFoundation
 }
+
+
+
+
