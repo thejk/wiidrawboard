@@ -109,5 +109,15 @@ void WiiMote::parseCamera(u8* data, u32 len) {
     u16 y2 = ir[4];
     y2 |= (ir[2] & y2mask) <<6;
 
-    printf("(%4u, %4u), (%4u, %4u)\n", x1, y2, x2, y2);
+    //printf("(%4u, %4u), (%4u, %4u)\n", x1, y2, x2, y2);
+    if(x1 != mObjects[0].first || y1 != mObjects[0].second) {
+        mObjects[0].first = x1;
+        mObjects[0].second = y1;
+        objectMoved(0, x1, y1);
+    }
+    if(x2 != mObjects[1].first || y2 != mObjects[1].second) {
+        mObjects[1].first = x2;
+        mObjects[1].second = y2;
+        objectMoved(0, x2, y2);
+    }
 }
