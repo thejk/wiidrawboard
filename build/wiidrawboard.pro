@@ -19,6 +19,7 @@ SOURCES += ../src/main.cpp \
 HEADERS +=  ../inc/hid.hpp
 SOURCES += ../src/hid.cpp
 
+HEADERS += ../inc/tool.hpp
 HEADERS += ../inc/drawboard.hpp
 SOURCES += ../src/drawboard.cpp
 HEADERS += ../inc/toolbox.hpp
